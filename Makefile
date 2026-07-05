@@ -1,4 +1,4 @@
-.PHONY: validate validate-spine smoke carry emit-service-manifest release-dry-run
+.PHONY: validate validate-spine validate-negative smoke carry emit-service-manifest release-dry-run
 
 validate: validate-spine
 	python3 tools/validate.py
@@ -17,3 +17,6 @@ smoke:
 
 carry:
 	python3 tools/emit_sourceos_carry.py > examples/sourceos-carry.embeddinglab.json
+
+validate-negative:
+	python3 tools/run_negative_fixtures.py
