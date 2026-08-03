@@ -9,7 +9,8 @@
     "rerankers",
     "hybrid-retrieval-preparation",
     "vector-evaluation",
-    "semantic-indexing"
+    "semantic-indexing",
+    "crossmodal-embeddings"
   ],
   "serviceManifests": [
     "service-manifest/functional-service.v1.json"
@@ -25,5 +26,9 @@
     "allowed": true,
     "carriesMutableModelState": false,
     "clientRefRequired": true
+  },
+  "imageHandoff": {
+    "seam": "SociOS-Linux/imagelab#multimodal-handoff",
+    "note": "image encoder lives in imagelab; embeddinglab owns the shared text+image vector space"
   }
 }
