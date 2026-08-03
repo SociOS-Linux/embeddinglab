@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/embedding/crossmodal-embedding.v0.json",
+  "title": "CrossmodalQuery",
+  "description": "D6 (crossmodal search): text and/or image inputs embedded into ONE shared vector space, matched crossmodally (text<->image). The shared space is embeddinglab's; the image encoding is handed off from imagelab#multimodal-handoff (provenance kept). Lab-only contract: emits a governed match, never self-promotes a model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["query", "unified_space_ref", "results"],
+  "properties": {
+    "query": {
+      "type": "object", "additionalProperties": false, "required": ["mode"],
+      "description": "at least one of text/image_ref must be present, consistent with mode",
+      "properties": {
+        "mode": {"type": "string", "enum": ["text", "image", "combined"]},
+        "text": {"type": ["string", "null"]},
+        "image_ref": {"type": ["string", "null"], "description": "content-addressed image ref or data: URI"},
+        "image_encoding_handoff": {"type": ["string", "null"], "description": "imagelab multimodal-handoff receipt id (image-encoder provenance)"}
+      },
+      "allOf": [
+        {"if": {"properties": {"mode": {"const": "text"}}}, "then": {"required": ["text"]}},
+        {"if": {"properties": {"mode": {"const": "image"}}}, "then": {"required": ["image_ref"]}},
+        {"if": {"properties": {"mode": {"const": "combined"}}}, "then": {"required": ["text", "image_ref"]}}
+      ]
+    },
+    "unified_space_ref": {"type": "string", "description": "embeddinglab shared vector-space id (text+image co-embedded)"},
+    "top_k": {"type": "integer", "minimum": 1, "maximum": 200, "default": 20},
+    "results": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "modality", "score"],
+      "properties": {
+        "id": {"type": "string"},
+        "modality": {"type": "string", "enum": ["text", "image"]},
+        "score": {"type": "number", "minimum": 0, "maximum": 1}
+      }}}
+  }
+}

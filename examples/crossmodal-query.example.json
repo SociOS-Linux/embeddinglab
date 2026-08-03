@@ -1,0 +1,7 @@
+{ "query": {"mode": "combined", "text": "red high-heeled shoe",
+    "image_ref": "cid:bafyimageexample", "image_encoding_handoff": "imagelab:handoff:rcpt-001"},
+  "unified_space_ref": "embeddinglab:space:text-image-v0", "top_k": 3,
+  "results": [
+    {"id": "product:shoe-42", "modality": "image", "score": 0.95},
+    {"id": "listing:red-heels", "modality": "text", "score": 0.92},
+    {"id": "product:shoe-17", "modality": "image", "score": 0.89}] }
